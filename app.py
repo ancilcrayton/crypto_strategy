@@ -49,7 +49,8 @@ app = dash.Dash()
 app.layout = html.Div([
                 html.H1('Cryptocurrency Dashboard'),
                 dcc.Graph(id='btc_plot',
-                        figure=fig)
+                        figure=fig),
+
 ])
 
 # Add the server clause
