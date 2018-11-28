@@ -5,6 +5,7 @@ import plotly
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+from dash.dependencies import Input, Output # Add State later
 
 # Initialize the app
 app = dash.Dash()
