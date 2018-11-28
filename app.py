@@ -36,7 +36,8 @@ trace2 = go.Scatter(x=btc_open.index, y = bollinger_low,
                   mode='lines', name='Bollinger Low')
 trace3 = go.Scatter(x=btc_open.index, y = bollinger_high,
                   mode='lines', name='Bollinger High')
-
+                  
+# Save figures and set layout
 data = [trace1, trace2, trace3]
 layout = go.Layout(title='Bitcoin with Bollinger bands, USD 2018')
 
