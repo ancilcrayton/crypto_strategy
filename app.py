@@ -37,6 +37,9 @@ app.layout = html.Div([
                 ], style=dict(width='50%', display='inline-block')),
                 html.Div([
                     dcc.Graph(id='bollinger_plot')
+                ], style=dict(width='50%', display='inline-block')),
+                html.Div([
+                    dcc.Markdown(id='bollinger_performance')
                 ], style=dict(width='50%', display='inline-block'))
 ])
 
@@ -72,6 +75,16 @@ def bollinger_graph(value):
     layout = go.Layout(title='{} with Bollinger Bands'.format(value))
     fig = go.Figure(data=data, layout=layout)
     return fig
+
+@app.callback(Output('bollinger_performance', 'children'),
+                [Input('bollinger_plot_value', 'value')])
+def strategy_performance(value):
+    text = '''
+    ## {value} Performance
+    Average Return:
+    Cumulative Return:
+    '''.format(value=value)
+    return text
 
 # Add the server clause
 if __name__ == '__main__':
