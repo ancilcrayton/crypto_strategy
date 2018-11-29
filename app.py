@@ -33,9 +33,9 @@ bollinger_high = btc_mean + (btc_std*no_std_devs)
 trace1 = go.Scatter(x=btc_open.index, y = btc_open,
                   mode='lines', name='BTC-USD')
 trace2 = go.Scatter(x=btc_open.index, y = bollinger_low,
-                  mode='lines', name='Bollinger Low')
+                  line=dict(dash='dash'), name='Bollinger Low')
 trace3 = go.Scatter(x=btc_open.index, y = bollinger_high,
-                  mode='lines', name='Bollinger High')
+                  line=dict(dash='dash'), name='Bollinger High')
 
 # Save figures and set layout
 data = [trace1, trace2, trace3]
@@ -48,9 +48,9 @@ app = dash.Dash()
 
 # Set up the app
 app.layout = html.Div([
-                html.H1('Cryptocurrency Dashboard'),
-                dcc.Graph(id='btc_plot',
-                        figure=fig),
+                html.H1('Cryptocurrency Dashboard',
+                    style={'textAlign':'center'}),
+                dcc.Graph(id='btc_plot',figure=fig)
 
 ])
 
