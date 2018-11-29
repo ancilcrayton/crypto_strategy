@@ -8,44 +8,16 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output # Add State later
 
+# Cryptocurrencies data
+cryptos = pd.read_csv('data/cryptos.csv')
+
 # Set dates
 start_date = pd.datetime(2018,1,1)
 end_date = pd.datetime.today()
 
-# Cryptocurrencies data
-cryptos = pd.read_csv('data/cryptos.csv')
-
-# Get Bitcoin data
-btc = pdr.get_data_yahoo('BTC-USD', start_date, end_date)
-
-# Save the open price
-btc_open = btc['Open']
-
 # Set window size and number of standard deviations (can make an input later!)
 window_size = 5
 no_std_devs = 2
-
-# Empirical mean and standard deviation
-btc_mean = btc_open.rolling(window_size).mean()
-btc_std = btc_open.rolling(window_size).std()
-
-# Calculate the Bollinger bands
-bollinger_low = btc_mean - (btc_std*no_std_devs)
-bollinger_high = btc_mean + (btc_std*no_std_devs)
-
-# Create graph object
-trace1 = go.Scatter(x=btc_open.index, y = btc_open,
-                  mode='lines', name='BTC-USD')
-trace2 = go.Scatter(x=btc_open.index, y = bollinger_low,
-                  line=dict(dash='dash'), name='Bollinger Low')
-trace3 = go.Scatter(x=btc_open.index, y = bollinger_high,
-                  line=dict(dash='dash'), name='Bollinger High')
-
-# Save figures and set layout
-data = [trace1, trace2, trace3]
-layout = go.Layout(title='Bitcoin with Bollinger bands, USD 2018')
-
-fig = go.Figure(data=data, layout=layout)
 
 # Initialize the app
 app = dash.Dash()
@@ -68,6 +40,7 @@ app.layout = html.Div([
                 ], style=dict(width='50%', display='inline-block'))
 ])
 
+# Add interactivity for stock comparison graph
 @app.callback(Output('stock_plot', 'figure'),
                 [Input('stock_plot_value', 'value')])
 def stock_graph(values):
@@ -82,16 +55,22 @@ def stock_graph(values):
     fig = go.Figure(data=traces, layout=layout)
     return fig
 
+# Add interactivity for Bollinger graphs
 @app.callback(Output('bollinger_plot', 'figure'),
                 [Input('bollinger_plot_value', 'value')])
 def bollinger_graph(value):
     stock = pdr.get_data_yahoo(value, start_date, end_date)
     stock_open = stock['Open']
-    trace = go.Scatter(x=stock_open.index, y = stock_open,
+    bollinger_low, bollinger_high = compute_bollinger(stock_open, window_size, no_std_devs)
+    trace1 = go.Scatter(x=stock_open.index, y = stock_open,
                       mode='lines', name=value)
-    data = [trace]
+    trace2 = go.Scatter(x=stock_open.index, y = bollinger_low,
+                      line=dict(dash='dash'), name='Bollinger Low')
+    trace3 = go.Scatter(x=stock_open.index, y = bollinger_high,
+                      line=dict(dash='dash'), name='Bollinger High')
+    data = [trace1, trace2, trace3]
     layout = go.Layout(title='{} with Bollinger Bands'.format(value))
-    fig = go.Figure(data=traces, layout=layout)
+    fig = go.Figure(data=data, layout=layout)
     return fig
 
 # Add the server clause
