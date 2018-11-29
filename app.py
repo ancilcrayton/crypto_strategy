@@ -24,7 +24,7 @@ app = dash.Dash()
 
 # Set up the app
 app.layout = html.Div([
-                html.H1('Cryptocurrency Dashboard',
+                html.H1('Exploring the Cryptocurrency Market',
                     style={'textAlign':'center'}),
                 html.Div([
                     dcc.Dropdown(id='stock_plot_value', options=[dict(label=cryptos['name'][i], value=cryptos['code'][i]) for i in range(len(cryptos))], multi=True, value=['BTC-USD'])
@@ -55,7 +55,7 @@ def stock_graph(values):
     fig = go.Figure(data=traces, layout=layout)
     return fig
 
-# Add interactivity for Bollinger graphs
+# Add interactivity for Bollinger graph
 @app.callback(Output('bollinger_plot', 'figure'),
                 [Input('bollinger_plot_value', 'value')])
 def bollinger_graph(value):
