@@ -2,6 +2,7 @@ import pandas as pd
 import pandas_datareader as pdr
 import numpy as np
 import plotly.graph_objs as go
+from utils import compute_bollinger
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -50,7 +51,9 @@ app = dash.Dash()
 app.layout = html.Div([
                 html.H1('Cryptocurrency Dashboard',
                     style={'textAlign':'center'}),
-                dcc.Graph(id='btc_plot',figure=fig)
+                html.Div([
+                    dcc.Graph(id='btc_plot',figure=fig)
+                ], style=dict(width='50%', display='inline-block'))
 
 ])
 
