@@ -12,6 +12,9 @@ from dash.dependencies import Input, Output # Add State later
 start_date = pd.datetime(2018,1,1)
 end_date = pd.datetime.today()
 
+# Cryptocurrencies data
+cryptos = pd.read_csv('data/cryptos.csv')
+
 # Get Bitcoin data
 btc = pdr.get_data_yahoo('BTC-USD', start_date, end_date)
 
@@ -52,9 +55,17 @@ app.layout = html.Div([
                 html.H1('Cryptocurrency Dashboard',
                     style={'textAlign':'center'}),
                 html.Div([
-                    dcc.Graph(id='btc_plot',figure=fig)
+                    dcc.Dropdown(id='stock_plot_value', options=[dict(label=cryptos['name'][i], value=cryptos['code'][i]) for i in range(len(cryptos))], multi=True, value='BTC-USD')
+                ], style=dict(width='50%', display='inline-block')),
+                html.Div([
+                    dcc.Dropdown(id='bollinger_plot_value', options=[dict(label=cryptos['name'][i], value=cryptos['code'][i]) for i in range(len(cryptos))])
+                ], style=dict(width='50%', display='inline-block')),
+                html.Div([
+                    dcc.Graph(id='stock_plot',figure=fig)
+                ], style=dict(width='50%', display='inline-block')),
+                html.Div([
+                    dcc.Graph(id='bollinger_plot',figure=fig)
                 ], style=dict(width='50%', display='inline-block'))
-
 ])
 
 # Add the server clause
