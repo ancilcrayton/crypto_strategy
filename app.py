@@ -42,7 +42,7 @@ app.layout = html.Div([
                 ], style=dict(width='50%', display='inline-block')),
                 html.Div([
                     dcc.Markdown(id='bollinger_performance')
-                ], style=dict(width='50%', display='inline-block'))
+                ], style=dict(width='50%', display='inline-block', float='right'))
 ])
 
 # Add interactivity for stock comparison graph
