@@ -30,19 +30,19 @@ app.layout = html.Div([
                     style={'textAlign':'center'}),
                 html.Div([
                     dcc.Dropdown(id='stock_plot_value', options=[dict(label=cryptos['name'][i], value=cryptos['code'][i]) for i in range(len(cryptos))], multi=True, value=['BTC-USD'])
-                ], style=dict(width='50%', display='inline-block')),
+                ], style=dict(width='48%', display='inline-block')),
                 html.Div([
                     dcc.Dropdown(id='bollinger_plot_value', options=[dict(label=cryptos['name'][i], value=cryptos['code'][i]) for i in range(len(cryptos))], value='BTC-USD')
-                ], style=dict(width='50%', display='inline-block')),
+                ], style=dict(width='48%', display='inline-block', float='right')),
                 html.Div([
                     dcc.Graph(id='stock_plot')
-                ], style=dict(width='50%', display='inline-block')),
+                ], style=dict(width='48%', display='inline-block')),
                 html.Div([
                     dcc.Graph(id='bollinger_plot')
-                ], style=dict(width='50%', display='inline-block')),
+                ], style=dict(width='48%', display='inline-block', float='right')),
                 html.Div([
                     dcc.Markdown(id='bollinger_performance')
-                ], style={"width":'50%', "display":'inline-block', "float":'right', "text-align":'center'})
+                ], style={"width":'48%', "display":'inline-block', "float":'right', "text-align":'center'})
 ])
 
 # Add interactivity for stock comparison graph
