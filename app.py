@@ -7,6 +7,8 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output # Add State later
+# Remove indentation to avoid markdown not rendering
+from textwrap import dedent
 
 # Cryptocurrencies data
 cryptos = pd.read_csv('data/cryptos.csv')
@@ -79,12 +81,15 @@ def bollinger_graph(value):
 @app.callback(Output('bollinger_performance', 'children'),
                 [Input('bollinger_plot_value', 'value')])
 def strategy_performance(value):
-    text = '''
+    text = """
     ## {value} Performance
-    Average Return:
-    Cumulative Return:
-    '''.format(value=value)
-    return text
+    **Average Daily Return**:
+
+    **Average Monthly Return**:
+
+    **Cumulative Return**:
+    """.format(value=value)
+    return dedent(text)
 
 # Add the server clause
 if __name__ == '__main__':
