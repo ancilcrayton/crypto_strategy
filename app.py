@@ -16,7 +16,7 @@ start_date = pd.datetime(2018,1,1)
 end_date = pd.datetime.today()
 
 # Set window size and number of standard deviations (can make an input later!)
-window_size = 5
+window_size = 7
 no_std_devs = 2
 
 # Initialize the app
