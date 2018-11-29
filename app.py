@@ -21,13 +21,16 @@ end_date = pd.datetime.today()
 window_size = 7
 no_std_devs = 2
 
+# Color scheme dictionary
+color = {'background':'#C96567', 'text':'white', 'div':'314455', 'plot':'#C96567'}
+
 # Initialize the app
 app = dash.Dash()
 
 # Set up the app
 app.layout = html.Div([
                 html.H1('Exploring the Cryptocurrency Market',
-                    style={'textAlign':'center'}),
+                    style={'textAlign':'center', 'font-family':'Dosis'}),
                 html.Div([
                     dcc.Dropdown(id='stock_plot_value', options=[dict(label=cryptos['name'][i], value=cryptos['code'][i]) for i in range(len(cryptos))], multi=True, value=['BTC-USD'])
                 ], style=dict(width='48%', display='inline-block')),
@@ -56,7 +59,7 @@ def stock_graph(values):
         trace = go.Scatter(x=stock_open.index, y = stock_open,
                           mode='lines', name=value)
         traces.append(trace)
-    layout = go.Layout(title='Cryptocurrencies in 2018')
+    layout = go.Layout(title='Cryptocurrencies in 2018', paper_bgcolor=color['plot'])
     fig = go.Figure(data=traces, layout=layout)
     return fig
 
@@ -74,7 +77,7 @@ def bollinger_graph(value):
     trace3 = go.Scatter(x=stock_open.index, y = bollinger_high,
                       line=dict(dash='dash'), name='Bollinger High')
     data = [trace1, trace2, trace3]
-    layout = go.Layout(title='{} with Bollinger Bands'.format(value))
+    layout = go.Layout(title='{} with Bollinger Bands'.format(value), paper_bgcolor=color['plot'])
     fig = go.Figure(data=data, layout=layout)
     return fig
 
