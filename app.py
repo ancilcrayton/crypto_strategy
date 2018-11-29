@@ -55,18 +55,44 @@ app.layout = html.Div([
                 html.H1('Cryptocurrency Dashboard',
                     style={'textAlign':'center'}),
                 html.Div([
-                    dcc.Dropdown(id='stock_plot_value', options=[dict(label=cryptos['name'][i], value=cryptos['code'][i]) for i in range(len(cryptos))], multi=True, value='BTC-USD')
+                    dcc.Dropdown(id='stock_plot_value', options=[dict(label=cryptos['name'][i], value=cryptos['code'][i]) for i in range(len(cryptos))], multi=True, value=['BTC-USD'])
                 ], style=dict(width='50%', display='inline-block')),
                 html.Div([
-                    dcc.Dropdown(id='bollinger_plot_value', options=[dict(label=cryptos['name'][i], value=cryptos['code'][i]) for i in range(len(cryptos))])
+                    dcc.Dropdown(id='bollinger_plot_value', options=[dict(label=cryptos['name'][i], value=cryptos['code'][i]) for i in range(len(cryptos))], value='BTC-USD')
                 ], style=dict(width='50%', display='inline-block')),
                 html.Div([
-                    dcc.Graph(id='stock_plot',figure=fig)
+                    dcc.Graph(id='stock_plot')
                 ], style=dict(width='50%', display='inline-block')),
                 html.Div([
-                    dcc.Graph(id='bollinger_plot',figure=fig)
+                    dcc.Graph(id='bollinger_plot')
                 ], style=dict(width='50%', display='inline-block'))
 ])
+
+@app.callback(Output('stock_plot', 'figure'),
+                [Input('stock_plot_value', 'value')])
+def stock_graph(values):
+    traces = []
+    for value in values:
+        stock = pdr.get_data_yahoo(value, start_date, end_date)
+        stock_open = stock['Open']
+        trace = go.Scatter(x=stock_open.index, y = stock_open,
+                          mode='lines', name=value)
+        traces.append(trace)
+    layout = go.Layout(title='Cryptocurrencies in 2018')
+    fig = go.Figure(data=traces, layout=layout)
+    return fig
+
+@app.callback(Output('bollinger_plot', 'figure'),
+                [Input('bollinger_plot_value', 'value')])
+def bollinger_graph(value):
+    stock = pdr.get_data_yahoo(value, start_date, end_date)
+    stock_open = stock['Open']
+    trace = go.Scatter(x=stock_open.index, y = stock_open,
+                      mode='lines', name=value)
+    data = [trace]
+    layout = go.Layout(title='{} with Bollinger Bands'.format(value))
+    fig = go.Figure(data=traces, layout=layout)
+    return fig
 
 # Add the server clause
 if __name__ == '__main__':
