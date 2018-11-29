@@ -42,7 +42,7 @@ app.layout = html.Div([
                 ], style=dict(width='50%', display='inline-block')),
                 html.Div([
                     dcc.Markdown(id='bollinger_performance')
-                ], style=dict(width='50%', display='inline-block', float='right'))
+                ], style={"width":'50%', "display":'inline-block', "float":'right', "text-align":'center'})
 ])
 
 # Add interactivity for stock comparison graph
@@ -82,7 +82,7 @@ def bollinger_graph(value):
                 [Input('bollinger_plot_value', 'value')])
 def strategy_performance(value):
     text = """
-    ## {value} Performance
+    ### {value} Performance
     **Average Daily Return**:
 
     **Average Monthly Return**:
