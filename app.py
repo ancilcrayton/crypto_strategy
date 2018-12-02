@@ -90,16 +90,17 @@ def strategy_performance(value):
     stock_data['Market Return'] = stock_data['Open'].pct_change()
     stock_data['Strategy Return'] = stock_data['Market Return'] * stock_data['Position']
     avg_d_ret = stock_data['Strategy Return'].mean()
+    avg_m_ret = stock_data['Strategy Return'].resample('M').mean().mean()
     cum_ret = stock_data['Strategy Return'].cumsum()[-1]
     # Report information
     text = """
     ### {value} Performance
-    **Average Daily Return**: {avgdret}
+    **Average Daily Return**: {avgdret}%
 
-    **Average Monthly Return**:
+    **Average Monthly Return**: {avgmret}%
 
-    **Cumulative Return**: {cumsum}
-    """.format(value=value, avgdret=avg_d_ret, cumsum=cum_ret)
+    **Cumulative Return**: {cumsum}%
+    """.format(value=value, avgdret=round(avg_d_ret*100,2), avgmret=round(avg_m_ret*100,2), cumsum=round(cum_ret*100,2))
     return dedent(text)
 
 # Add the server clause
