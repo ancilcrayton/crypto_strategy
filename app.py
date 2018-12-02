@@ -2,7 +2,7 @@ import pandas as pd
 import pandas_datareader as pdr
 import numpy as np
 import plotly.graph_objs as go
-from utils import compute_bollinger
+from utils import compute_bollinger, bollinger_strategy
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -84,14 +84,22 @@ def bollinger_graph(value):
 @app.callback(Output('bollinger_performance', 'children'),
                 [Input('bollinger_plot_value', 'value')])
 def strategy_performance(value):
+    stock = pdr.get_data_yahoo(value, start_date, end_date)
+    stock_data = bollinger_strategy(stock, window_size, no_std_devs)
+    stock_data['Position'].fillna(method='ffill', inplace=True)
+    stock_data['Market Return'] = stock_data['Open'].pct_change()
+    stock_data['Strategy Return'] = stock_data['Market Return'] * stock_data['Position']
+    avg_d_ret = stock_data['Strategy Return'].mean()
+    cum_ret = stock_data['Strategy Return'].cumsum()[-1]
+    # Report information
     text = """
     ### {value} Performance
-    **Average Daily Return**:
+    **Average Daily Return**: {avgdret}
 
     **Average Monthly Return**:
 
-    **Cumulative Return**:
-    """.format(value=value)
+    **Cumulative Return**: {cumsum}
+    """.format(value=value, avgdret=avg_d_ret, cumsum=cum_ret)
     return dedent(text)
 
 # Add the server clause
