@@ -41,7 +41,7 @@ def bollinger_strategy(df, window_size, no_std_devs):
 
     """
     # Compute Bollinger bands using above function
-    df['Bollinger Low'], df['Bollinger High'] = compute_bollinger(df=df, window_size=window_size, no_std_devs=no_std_devs)
+    df['Bollinger Low'], df['Bollinger High'] = compute_bollinger(df=df['Open'], window_size=window_size, no_std_devs=no_std_devs)
 
     # Initialize an empty Position column to fill in
     df['Position'] = None
@@ -57,12 +57,12 @@ def bollinger_strategy(df, window_size, no_std_devs):
         prev_row = df.iloc[index-1]
 
         # Hold long position
-        if mode == 'open' and row['Open'] < row['Bollinger Low'] and prev_row['Open'] > prev_row['Bollinger Low']:
+        if mode == 'open' and row['Open'] <= row['Bollinger Low'] and prev_row['Open'] > prev_row['Bollinger Low']:
             df.iloc[index, df.columns.get_loc('Position')] = 1
             mode = 'close'
 
         # Hold a short position
-        if mode == 'close' and row['Open'] > row['Bollinger High'] and prev_row['Open'] < prev_row['Bollinger High']:
+        if mode == 'close' and row['Open'] >= row['Bollinger High'] and prev_row['Open'] < prev_row['Bollinger High']:
             df.iloc[index, df.columns.get_loc('Position')] = -1
             mode = 'open'
 
