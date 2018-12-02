@@ -27,6 +27,10 @@ color = {'background':'#C96567', 'text':'white', 'div':'314455', 'plot':'#373737
 # Initialize the app
 app = dash.Dash()
 
+# Append Bootstrap 4 CSS and Javascript files
+app.css.append_css({'external_url': 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'})
+app.scripts.append_script({'external_url': 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'})
+
 # Set up the app
 app.layout = html.Div([
                 html.H1('Exploring the Cryptocurrency Market',
