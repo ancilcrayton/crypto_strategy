@@ -67,3 +67,8 @@ def bollinger_strategy(df, window_size, no_std_devs):
             mode = 'open'
 
     return df
+
+def get_headlines(url):
+    page = requests.get(url)
+    headlines = page.json()
+    return headlines
