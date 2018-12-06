@@ -70,6 +70,21 @@ def bollinger_strategy(df, window_size, no_std_devs):
     return df
 
 def get_headlines(url):
+    """This function returns a json object of headlines from the News API url.
+
+    Parameters
+    ----------
+    url : string
+        URL to the News API.
+
+    Returns
+    -------
+    json
+        json object of headlines.
+
+    """
+    # Access the url
     page = requests.get(url)
+    # Read the API as a json object
     headlines = page.json()
     return headlines
