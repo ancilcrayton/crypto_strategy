@@ -1,4 +1,5 @@
 import pandas as pd
+import requests
 
 def compute_bollinger(df, window_size, no_std_devs):
     """This function computes the Bollinger bands.
