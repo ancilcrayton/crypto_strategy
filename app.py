@@ -109,4 +109,4 @@ def strategy_performance(value):
 
 # Add the server clause
 if __name__ == '__main__':
-    app.run_server()
+    app.run_server(debug=True)
