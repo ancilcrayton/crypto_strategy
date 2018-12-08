@@ -28,28 +28,31 @@ color = {'background':'#C96567', 'text':'white', 'div':'314455', 'plot':'#373737
 app = dash.Dash()
 
 # Append Bootstrap 4 CSS and Javascript files
-app.css.append_css({'external_url': 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'})
-app.scripts.append_script({'external_url': 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'})
+app.css.append_css({'external_url': 'https://www.w3schools.com/w3css/4/w3.css'})
 
 # Set up the app
 app.layout = html.Div([
                 html.H1('Exploring the Cryptocurrency Market',
                     style={'textAlign':'center', 'fontFamily':'serif'}),
                 html.Div([
-                    dcc.Dropdown(id='stock_plot_value', options=[dict(label=cryptos['name'][i], value=cryptos['code'][i]) for i in range(len(cryptos))], multi=True, value=['BTC-USD'])
-                ], style=dict(width='48%', display='inline-block')),
-                html.Div([
-                    dcc.Dropdown(id='bollinger_plot_value', options=[dict(label=cryptos['name'][i], value=cryptos['code'][i]) for i in range(len(cryptos))], value='BTC-USD')
-                ], style=dict(width='48%', display='inline-block', float='right')),
-                html.Div([
-                    dcc.Graph(id='stock_plot')
-                ], style=dict(width='48%', display='inline-block')),
-                html.Div([
-                    dcc.Graph(id='bollinger_plot')
-                ], style=dict(width='48%', display='inline-block', float='right')),
-                html.Div([
-                    dcc.Markdown(id='bollinger_performance')
-                ], style={"width":'48%', "display":'inline-block', "float":'right', "text-align":'center'})
+                    html.Div([
+                        html.Div([
+                            dcc.Dropdown(id='stock_plot_value', options=[dict(label=cryptos['name'][i], value=cryptos['code'][i]) for i in range(len(cryptos))], multi=True, value=['BTC-USD'])
+                ]),
+                        html.Div([
+                            dcc.Graph(id='stock_plot')
+                ]),
+                        html.Div([
+                            dcc.Dropdown(id='bollinger_plot_value', options=[dict(label=cryptos['name'][i], value=cryptos['code'][i]) for i in range(len(cryptos))], value='BTC-USD')
+                ]),
+                        html.Div([
+                            dcc.Graph(id='bollinger_plot')
+                ]),
+                        html.Div([
+                            dcc.Markdown(id='bollinger_performance')
+                ], style={"text-align":'center'})
+                    ], className='w3-container w3-cell')
+                ], className='w3-cell-row')
 ])
 
 # Add interactivity for stock comparison graph
