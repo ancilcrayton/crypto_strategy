@@ -2,8 +2,9 @@ import pandas as pd
 import pandas_datareader as pdr
 import numpy as np
 import plotly.graph_objs as go
-from utils import compute_bollinger, bollinger_strategy
+from utils import compute_bollinger, bollinger_strategy, get_news
 import dash
+import dash_table
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output # Add State later
@@ -12,6 +13,12 @@ from textwrap import dedent
 
 # Cryptocurrencies data
 cryptos = pd.read_csv('data/cryptos.csv')
+
+# url for news
+url = 'https://newsapi.org/v2/everything?q=cryptocurrency&sortBy=publishedAt&apiKey=e3e38edf30814dc18ef7f21a7fb9e775'
+
+# Get table of news data
+headlines = get_news(url)
 
 # Set dates
 start_date = pd.datetime(2018,1,1)
@@ -37,6 +44,14 @@ app.layout = html.Div([
                 html.Div([
                     html.Div([
                         html.Div([
+                            dash_table.DataTable(
+                                id='news_table',
+                                columns=[{"name": i, "id": i} for i in headlines.columns],
+                                data=headlines.to_dict("rows")
+                            )
+                    ], className='w3-container w3-cell w3-cell-middle'),
+                    # Another column
+                        html.Div([
                             dcc.Dropdown(id='stock_plot_value', options=[dict(label=cryptos['name'][i], value=cryptos['code'][i]) for i in range(len(cryptos))], multi=True, value=['BTC-USD'])
                 ]),
                         html.Div([
@@ -53,7 +68,7 @@ app.layout = html.Div([
                 ], style={"text-align":'center'})
                     ], className='w3-container w3-cell')
                 ], className='w3-cell-row')
-])
+], style={'width':'100%', 'height':'100%', 'backgroundColor':color['background']})
 
 # Add interactivity for stock comparison graph
 @app.callback(Output('stock_plot', 'figure'),
