@@ -89,7 +89,7 @@ def get_headlines(url):
     headlines = page.json()
     return headlines
 
-def get_headlines(url):
+def get_news(url):
     """This function creates a dataframe of news articles.
 
     Parameters
