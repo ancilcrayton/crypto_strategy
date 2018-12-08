@@ -103,7 +103,6 @@ def get_news(url):
         dataframe of news information, such as date, title, and source.
 
     """
-    # Access the url
     headlines = get_headlines(url)
     articles = headlines['articles']
     dfs = []
