@@ -88,3 +88,29 @@ def get_headlines(url):
     # Read the API as a json object
     headlines = page.json()
     return headlines
+
+def get_headlines(url):
+    """This function creates a dataframe of news articles.
+
+    Parameters
+    ----------
+    url : string
+        URL to the News API.
+
+    Returns
+    -------
+    dataframe
+        dataframe of news information, such as date, title, and source.
+
+    """
+    # Access the url
+    headlines = get_headlines(url)
+    articles = headlines['articles']
+    dfs = []
+    for article in articles:
+        time = article['publishedAt']
+        title = article['title']
+        source = article['source']['name']
+        dfs.append([time, title, source])
+    data = pd.DataFrame(dfs, columns=['Date', 'Headline', 'Source'])
+    return data
