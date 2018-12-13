@@ -34,7 +34,7 @@ color = {'background':'#C96567', 'text':'white', 'div':'314455', 'plot':'#373737
 # Initialize the app
 app = dash.Dash()
 
-# Append Bootstrap 4 CSS and Javascript files
+# Append W3 CSS
 app.css.append_css({'external_url': 'https://www.w3schools.com/w3css/4/w3.css'})
 
 # Set up the app
@@ -43,13 +43,13 @@ app.layout = html.Div([
                     style={'textAlign':'center', 'fontFamily':'serif'}),
                 html.Div([
                     html.Div([
-                        html.Div([
                             dash_table.DataTable(
                                 id='news_table',
                                 columns=[{"name": i, "id": i} for i in headlines.columns],
                                 data=headlines.to_dict("rows")
                             )
-                    ], className='w3-container w3-cell w3-cell-middle'),
+                    ], className='w3-container w3-cell'),
+                    html.Div([
                     # Another column
                         html.Div([
                             dcc.Dropdown(id='stock_plot_value', options=[dict(label=cryptos['name'][i], value=cryptos['code'][i]) for i in range(len(cryptos))], multi=True, value=['BTC-USD'])
