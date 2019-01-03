@@ -103,6 +103,7 @@ def bollinger_graph(value):
     fig = go.Figure(data=data, layout=layout)
     return fig
 
+# Add information for the portfolio performance
 @app.callback(Output('bollinger_performance', 'children'),
                 [Input('bollinger_plot_value', 'value')])
 def strategy_performance(value):
