@@ -42,13 +42,7 @@ app.layout = html.Div([
                 html.H1('Exploring the Cryptocurrency Market',
                     style={'textAlign':'center', 'fontFamily':'serif'}),
                 html.Div([
-                    html.Div([
-                            dash_table.DataTable(
-                                id='news_table',
-                                columns=[{"name": i, "id": i} for i in headlines.columns],
-                                data=headlines.to_dict("rows")
-                            )
-                    ], className='w3-container w3-cell'),
+
                     html.Div([
                     # Another column
                         html.Div([
@@ -81,7 +75,7 @@ def stock_graph(values):
         trace = go.Scatter(x=stock_open.index, y = stock_open,
                           mode='lines', name=value)
         traces.append(trace)
-    layout = go.Layout(title='Cryptocurrencies in 2018', paper_bgcolor=color['plot'], font=dict(color=color['text']))
+    layout = go.Layout(title='Cryptocurrencies', paper_bgcolor=color['plot'], font=dict(color=color['text']))
     fig = go.Figure(data=traces, layout=layout)
     return fig
 
