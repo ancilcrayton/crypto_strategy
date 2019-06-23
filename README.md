@@ -2,5 +2,6 @@
 
 This repository contains a notebook and Dash app outlining the Bollinger trading strategy for major cryptocurrencies.
 
-## Demo
+## Demo
+
 ![](img/demo.gif)
