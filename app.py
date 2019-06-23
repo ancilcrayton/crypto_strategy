@@ -25,8 +25,8 @@ start_date = pd.datetime(2018,1,1)
 end_date = pd.datetime.today()
 
 # Set window size and number of standard deviations (can make an input later!)
-window_size = 50
-no_std_devs = 1.5
+window_size = 20
+no_std_devs = 2
 
 # Color scheme dictionary
 color = {'background':'#C96567', 'text':'white', 'div':'314455', 'plot':'#373737'}
