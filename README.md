@@ -23,11 +23,11 @@ Install the dependencies by using `pip install -r requirements.txt`
 
 ## Usage
 
-To run the app use the command:
+To run the app use the command
 ```
 $ python app.py
 ```
 
-and copy the URL given in the command line as seen in the image
+and copy the URL given in the command line as seen in the image below and paste it into your browser.
 
 ![](img/link.png)
