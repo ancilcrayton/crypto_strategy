@@ -5,3 +5,8 @@ This repository contains code for a Plotly Dash app exploring prices and perform
 ## Demo
 
 ![](img/demo.gif)
+
+## Requirements
+The Dash app was created in Python 3.6.
+
+Install the dependencies by using `pip install -r requirements.txt`
